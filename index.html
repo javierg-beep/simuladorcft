@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Primera RFEF · Grupo 1 · 2025/26</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0d1b3e;--blue:#1a3a8f;--blue-m:#2756c5;--blue-l:#3b7de8;--sky:#60a5fa;--ice:#dbeafe;--pale:#f0f5ff;--white:#ffffff;--gold:#f5c518;--gold-dk:#c49a0a;--red:#e53935;--text:#0d1b3e;--muted:#6b7fa8;--border:#c7d8f5;--r-sm:10px;--r-md:16px;--r-lg:24px;--r-xl:28px;--shadow:0 4px 20px rgba(13,27,62,.10);--shadow-lg:0 8px 40px rgba(13,27,62,.16)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--pale);color:var(--text);min-height:100vh}
+header{background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 60%,var(--blue-m) 100%);padding:22px 20px 18px;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(91,150,255,.18) 0%,transparent 70%);pointer-events:none}
+.header-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:16px;position:relative;z-index:1}
+.shield-wrap{width:64px;height:64px;flex-shrink:0;background:rgba(255,255,255,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);border:2px solid rgba(255,255,255,.2);box-shadow:0 4px 16px rgba(0,0,0,.25);overflow:hidden}.header-text h1{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:1.5px;color:#fff;line-height:1}
+.header-text p{font-size:.78rem;color:rgba(255,255,255,.65);font-weight:600;margin-top:3px;letter-spacing:.5px}
+.header-badge{margin-left:auto;background:var(--gold);color:var(--navy);border-radius:20px;padding:4px 12px;font-size:.72rem;font-weight:800;letter-spacing:.3px;white-space:nowrap;flex-shrink:0}
+.tabs-wrap{background:var(--navy);padding:0 16px;display:flex;justify-content:center}
+.tabs{display:flex;max-width:760px;width:100%;gap:4px;padding:8px 0}
+.tab{flex:1;padding:9px 10px;text-align:center;color:rgba(255,255,255,.5);cursor:pointer;font-size:.8rem;font-weight:700;letter-spacing:.4px;border-radius:var(--r-md);transition:all .22s;border:1px solid transparent}
+.tab:hover:not(.active){color:rgba(255,255,255,.8);background:rgba(255,255,255,.07)}
+.tab.active{background:var(--blue-m);color:#fff;border-color:rgba(255,255,255,.15);box-shadow:0 2px 12px rgba(39,86,197,.5)}
+main{max-width:760px;margin:0 auto;padding:16px}
+.panel{display:none;animation:fadeUp .25s ease}
+.panel.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.sec-title{font-size:.72rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin:16px 0 10px;display:flex;align-items:center;gap:6px}
+.sec-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.card{background:var(--white);border-radius:var(--r-xl);box-shadow:var(--shadow);overflow:hidden;border:1px solid var(--border)}
+.clasi-table{width:100%;border-collapse:collapse}
+.clasi-table thead tr{background:linear-gradient(90deg,var(--blue) 0%,var(--blue-m) 100%)}
+.clasi-table th{padding:10px 8px;font-size:.68rem;font-weight:800;color:rgba(255,255,255,.85);text-align:center;text-transform:uppercase;letter-spacing:.6px}
+.clasi-table th:nth-child(2){text-align:left;padding-left:12px}
+.clasi-table th:first-child{width:36px}
+.clasi-table tbody tr{border-bottom:1px solid #edf2fc;transition:background .15s}
+.clasi-table tbody tr:last-child{border-bottom:none}
+.clasi-table td{padding:9px 8px;text-align:center;font-size:.79rem}
+.clasi-table td:nth-child(2){text-align:left;padding-left:12px}
+.clasi-table td:first-child{padding-left:14px}
+.clasi-table tr.z-asc td:first-child{box-shadow:inset 4px 0 0 #22c55e}
+.clasi-table tr.z-promo td:first-child{box-shadow:inset 4px 0 0 var(--blue-l)}
+.clasi-table tr.z-desc td:first-child{box-shadow:inset 4px 0 0 var(--red)}
+.clasi-table tr.z-asc td{background:#f0fdf4}
+.clasi-table tr.z-promo td{background:#eff6ff}
+.clasi-table tr.z-desc td{background:#fff1f1}
+.clasi-table tr.z-asc:hover td{background:#dcfce7}
+.clasi-table tr.z-promo:hover td{background:#dbeafe}
+.clasi-table tr.z-desc:hover td{background:#fee2e2}
+.pos-num{font-weight:800;color:var(--muted);font-size:.78rem}
+.team-name{font-weight:700;font-size:.82rem}
+.pts-cell{font-weight:900;color:var(--blue);font-size:.88rem}
+.dg-pos{color:#16a34a;font-weight:700}
+.dg-neg{color:var(--red);font-weight:700}
+.legend{display:flex;flex-wrap:wrap;gap:12px;padding:12px 16px;background:#f8faff;border-top:1px solid var(--border);border-radius:0 0 var(--r-xl) var(--r-xl)}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:.7rem;color:var(--muted);font-weight:600}
+.legend-dot{width:10px;height:10px;border-radius:3px}
+.cal-controls{display:flex;align-items:center;gap:10px;padding:14px 16px;background:#f8faff;border-bottom:1px solid var(--border);border-radius:var(--r-xl) var(--r-xl) 0 0}
+.cal-controls label{font-weight:800;font-size:.8rem;color:var(--muted);white-space:nowrap}
+.cal-controls select{flex:1;padding:8px 12px;border:1.5px solid var(--border);border-radius:var(--r-md);font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:700;color:var(--text);background:var(--white);cursor:pointer;outline:none;appearance:none}
+.cal-controls select:focus{border-color:var(--blue-m)}
+.cal-date-label{font-size:.72rem;color:var(--muted);font-weight:700;letter-spacing:.3px;padding:8px 16px 10px;background:#f8faff}
+.match-list{display:flex;flex-direction:column;gap:0}
+.match-row{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid #edf2fc;transition:background .14s}
+.match-row:last-child{border-bottom:none}
+.match-row:hover{background:#f5f8ff}
+.m-home{flex:1;text-align:right;font-weight:700;font-size:.8rem}
+.m-away{flex:1;text-align:left;font-weight:700;font-size:.8rem}
+.m-score{min-width:52px;text-align:center;background:var(--blue-m);color:#fff;border-radius:20px;padding:4px 10px;font-weight:900;font-size:.82rem;letter-spacing:.5px}
+.m-score.pending{background:var(--ice);color:var(--muted)}
+.m-score.simulated{background:var(--gold);color:var(--navy)}
+.sim-info{background:linear-gradient(90deg,#eff6ff,#dbeafe);border:1.5px solid #93c5fd;border-radius:var(--r-lg);padding:12px 16px;margin-bottom:14px;font-size:.78rem;color:#1e40af;font-weight:600;display:flex;align-items:center;gap:8px}
+.sim-j-btns{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.sim-j-btn{padding:6px 13px;border-radius:20px;border:1.5px solid var(--border);background:var(--white);font-family:'Nunito',sans-serif;font-size:.75rem;font-weight:800;color:var(--muted);cursor:pointer;transition:all .18s}
+.sim-j-btn:hover{border-color:var(--blue-l);color:var(--blue)}
+.sim-j-btn.active{background:var(--blue-m);color:#fff;border-color:var(--blue-m);box-shadow:0 2px 10px rgba(39,86,197,.4)}
+.sim-j-btn.done{background:#ecfdf5;color:#15803d;border-color:#86efac}
+.sim-card{background:var(--white);border-radius:var(--r-xl);box-shadow:var(--shadow);border:1px solid var(--border);overflow:hidden}
+.sim-card-header{background:linear-gradient(90deg,var(--blue) 0%,var(--blue-m) 100%);padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
+.sim-card-header span{color:#fff;font-weight:800;font-size:.82rem}
+.btn-auto{background:var(--gold);color:var(--navy);border:none;border-radius:20px;padding:5px 13px;font-family:'Nunito',sans-serif;font-size:.72rem;font-weight:800;cursor:pointer;transition:all .15s}
+.btn-auto:hover{background:var(--gold-dk)}
+.sim-match-row{display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid #edf2fc}
+.sim-match-row:last-child{border-bottom:none}
+.s-home{flex:1;text-align:right;font-weight:700;font-size:.78rem}
+.s-away{flex:1;text-align:left;font-weight:700;font-size:.78rem}
+.s-score-inputs{display:flex;align-items:center;gap:4px}
+.s-score-inputs input[type=number]{width:40px;height:36px;text-align:center;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'Nunito',sans-serif;font-size:.92rem;font-weight:900;color:var(--blue);background:var(--pale);outline:none;-moz-appearance:textfield;transition:border-color .15s}
+.s-score-inputs input:focus{border-color:var(--blue-m);background:var(--ice)}
+.s-score-inputs input::-webkit-outer-spin-button,.s-score-inputs input::-webkit-inner-spin-button{-webkit-appearance:none}
+.s-dash{font-weight:900;color:var(--muted);font-size:.9rem}
+.sim-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+.btn-primary{background:linear-gradient(135deg,var(--blue-m),var(--blue-l));color:#fff;border:none;border-radius:20px;padding:10px 22px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.82rem;cursor:pointer;box-shadow:0 4px 14px rgba(39,86,197,.35);transition:all .18s}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(39,86,197,.45)}
+.btn-secondary{background:var(--white);color:var(--muted);border:1.5px solid var(--border);border-radius:20px;padding:9px 18px;font-family:'Nunito',sans-serif;font-weight:700;font-size:.8rem;cursor:pointer;transition:all .15s}
+.btn-secondary:hover{border-color:var(--red);color:var(--red)}
+.btn-reset-j{background:var(--white);color:#b45309;border:1.5px solid #fcd34d;border-radius:20px;padding:9px 18px;font-family:'Nunito',sans-serif;font-weight:700;font-size:.8rem;cursor:pointer;transition:all .15s}
+.btn-reset-j:hover{background:#fffbeb;border-color:#f59e0b}
+.sim-clasi{margin-top:18px}
+.sim-clasi-table{width:100%;border-collapse:collapse}
+.sim-clasi-table thead tr{background:linear-gradient(90deg,var(--blue),var(--blue-m))}
+.sim-clasi-table th{padding:9px 8px;font-size:.67rem;font-weight:800;color:rgba(255,255,255,.85);text-align:center;text-transform:uppercase;letter-spacing:.6px}
+.sim-clasi-table th:nth-child(2){text-align:left;padding-left:12px}
+.sim-clasi-table td{padding:8px 8px;text-align:center;font-size:.77rem;border-bottom:1px solid #edf2fc}
+.sim-clasi-table td:nth-child(2){text-align:left;padding-left:12px;font-weight:700}
+.sim-clasi-table tr:last-child td{border-bottom:none}
+.sim-clasi-table tr.z-asc td:first-child{box-shadow:inset 4px 0 0 #22c55e}
+.sim-clasi-table tr.z-promo td:first-child{box-shadow:inset 4px 0 0 var(--blue-l)}
+.sim-clasi-table tr.z-desc td:first-child{box-shadow:inset 4px 0 0 var(--red)}
+.sim-clasi-table tr.z-asc td{background:#f0fdf4}
+.sim-clasi-table tr.z-promo td{background:#eff6ff}
+.sim-clasi-table tr.z-desc td{background:#fff1f1}
+.sim-clasi-table tr.z-asc:hover td{background:#dcfce7}
+.sim-clasi-table tr.z-promo:hover td{background:#dbeafe}
+.sim-clasi-table tr.z-desc:hover td{background:#fee2e2}
+.diff-up{color:#16a34a;font-weight:800;font-size:.75rem}
+.diff-dn{color:var(--red);font-weight:800;font-size:.75rem}
+.diff-eq{color:var(--muted);font-weight:700;font-size:.75rem}
+.badge{display:inline-block;padding:2px 7px;border-radius:10px;font-size:.62rem;font-weight:800;vertical-align:middle;margin-left:4px}
+.badge-asc{background:#dcfce7;color:#15803d}
+.badge-promo{background:var(--ice);color:#1d4ed8}
+.badge-desc{background:#fee2e2;color:#b91c1c}
+@media(max-width:480px){.m-home,.m-away,.s-home,.s-away{font-size:.7rem}.team-name{font-size:.75rem}.clasi-table td,.clasi-table th{padding:7px 4px;font-size:.66rem}}
+
+/* ── MODAL ACTUALIZAR ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(13,27,62,.55);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px;animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{background:var(--white);border-radius:var(--r-xl);box-shadow:var(--shadow-lg);width:100%;max-width:520px;overflow:hidden;animation:slideUp .25s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.modal-header{background:linear-gradient(135deg,var(--navy),var(--blue-m));padding:16px 20px;display:flex;align-items:center;justify-content:space-between}
+.modal-header h3{color:#fff;font-size:.95rem;font-weight:800;letter-spacing:.3px}
+.modal-close{background:rgba(255,255,255,.15);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.modal-close:hover{background:rgba(255,255,255,.3)}
+.modal-body{padding:18px 20px}
+.modal-label{font-size:.75rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.modal-textarea{width:100%;height:160px;border:1.5px solid var(--border);border-radius:var(--r-md);padding:10px 12px;font-family:'Nunito',sans-serif;font-size:.8rem;color:var(--text);resize:vertical;outline:none;transition:border-color .15s;background:var(--pale)}
+.modal-textarea:focus{border-color:var(--blue-m);background:#fff}
+.modal-hint{font-size:.7rem;color:var(--muted);margin-top:6px;line-height:1.5}
+.modal-footer{padding:0 20px 18px;display:flex;gap:8px;justify-content:flex-end}
+.modal-spinner{display:none;align-items:center;gap:8px;font-size:.78rem;color:var(--blue);font-weight:700}
+.modal-spinner.visible{display:flex}
+.spinner-dot{width:6px;height:6px;border-radius:50%;background:var(--blue-m);animation:bounce .8s infinite}
+.spinner-dot:nth-child(2){animation-delay:.15s}
+.spinner-dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:scale(.7);opacity:.5}40%{transform:scale(1);opacity:1}}
+.modal-result{margin-top:12px;padding:10px 14px;border-radius:var(--r-md);font-size:.78rem;display:none}
+.modal-result.ok{background:#ecfdf5;border:1px solid #86efac;color:#15803d;display:block}
+.modal-result.err{background:#fee2e2;border:1px solid #fca5a5;color:#b91c1c;display:block}
+/* btn update en header */
+.btn-update{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:20px;padding:5px 13px;font-family:'Nunito',sans-serif;font-size:.72rem;font-weight:800;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.btn-update:hover{background:rgba(255,255,255,.25)}
+
+
+.team-cell{display:flex;align-items:center;gap:8px}
+.team-logo{width:24px;height:24px;object-fit:contain;flex-shrink:0;border-radius:2px}
+.team-logo-svg{width:24px;height:24px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="shield-wrap">
+      <img src="CF_Talavera_de_la_Reina.png" style="width:100%;height:100%;object-fit:cover;" alt="CF Talavera">
+    </div>
+    <div class="header-text">
+      <h1>CF Talavera</h1>
+      <p>Primera RFEF Grupo 1 · 2025/2026 </p>
+    </div>
+    <div class="header-badge">J29 / 38</div>
+    <button class="btn-update" onclick="openModal()">⟳ Actualizar</button>
+  </div>
+</header>
+<div class="tabs-wrap">
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('clasificacion')">📊 Clasificación</div>
+    <div class="tab" onclick="showTab('calendario')">📅 Calendario</div>
+    <div class="tab" onclick="showTab('simulador')">🎮 Simulador</div>
+  </div>
+</div>
+
+<main>
+<div id="panel-clasificacion" class="panel active">
+  <div class="sec-title">Clasificación · Jornada 29</div>
+  <div class="card">
+    <table class="clasi-table">
+      <thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>GF</th><th>GC</th><th>DG</th><th>Pts</th></tr></thead>
+      <tbody id="clasi-body"></tbody>
+    </table>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#22c55e"></div>Ascenso directo (1º)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--blue-l)"></div>Playoff ascenso (2º–5º)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>Descenso (16º–20º)</div>
+    </div>
+  </div>
+</div>
+
+<div id="panel-calendario" class="panel">
+  <div class="sec-title">Partidos por jornada</div>
+  <div class="card">
+    <div class="cal-controls">
+      <label>Jornada</label>
+      <select id="cal-select" onchange="renderCalendario()"></select>
+    </div>
+    <div class="cal-date-label" id="cal-date"></div>
+    <div class="match-list" id="cal-matches"></div>
+  </div>
+</div>
+
+<div id="panel-simulador" class="panel">
+  <div class="sim-info">🎮 <span>Introduce resultados de las jornadas pendientes (30–38) para ver la clasificación final simulada.</span></div>
+  <div class="sec-title">Jornadas pendientes</div>
+  <div class="sim-j-btns" id="sim-jornada-btns"></div>
+  <div id="sim-current-card" style="display:none">
+    <div class="sim-card">
+      <div class="sim-card-header">
+        <span id="sim-card-title"></span>
+        <button class="btn-auto" onclick="autoFill()">🎲 Aleatorio</button>
+      </div>
+      <div id="sim-current-matches"></div>
+    </div>
+    <div class="sim-actions">
+      <button class="btn-primary" onclick="applySimJornada()">✓ Aplicar jornada</button>
+      <button class="btn-reset-j" onclick="resetJornada()">✕ Limpiar jornada</button>
+      <button class="btn-secondary" onclick="resetSim()">↺ Reiniciar todo</button>
+    </div>
+  </div>
+  <div class="sim-clasi" id="sim-clasi-section" style="display:none">
+    <div class="sec-title">Clasificación simulada</div>
+    <div class="card">
+      <table class="sim-clasi-table">
+        <thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>Pts</th><th>DG</th><th>±</th></tr></thead>
+        <tbody id="sim-clasi-body"></tbody>
+      </table>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#22c55e"></div>Ascenso directo</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--blue-l)"></div>Playoff</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>Descenso</div>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+
+<script>
+const LOGOS = {
+  'CD Tenerife': '<img class="team-logo" src="CD_Tenerife_logo.png" alt="TEN">',
+  'RC Celta Fortuna':'<img class="team-logo" src="Real_Club_Celta_de_Vigo_(logo).png" alt="CEL">',
+  'Athletic Club B': '<img class="team-logo" src="Athletic_c_de_bilbao.png" alt="ATH">',
+  'Barakaldo CF': '<img class="team-logo" src="escudosinfondo.png" alt="BAR">',
+  'Pontevedra CF':'<img class="team-logo" src="navbarApp.png" alt="PON">',
+  'SD Ponferradina': '<img class="team-logo" src="SD_Ponferradina_logo.png" alt="SDP">',
+  'Zamora CF': '<img class="team-logo" src="ESCUDO-ZAMORA-CF.png" alt="ZAM">',
+  'Real Madrid Castilla': '<img class="team-logo" src="Real_Madrid_CF.svg.png" alt="REA">',
+  'CD Lugo': '<img class="team-logo" src="cd_lugo.png" alt="LUG">',
+  'Racing Club Ferrol': '<img class="team-logo" src="24aafcb6-6bec-4f85-8af8-0167b086d48e-389.png" alt="FER">',
+  'Unionistas de Salamanca CF': '<img class="team-logo" src="Escudo_Unionistas_Salamanca_peq.png" alt="UNI">',
+  'Arenas Club': '<img class="team-logo" src="Escudo-arenas-club-1.png" alt="UNI">',
+  'AD Mérida': '<img class="team-logo" src="Merida_AD_logo_2024.png" alt="UNI">',
+  'Real Avilés Industrial':'<img class="team-logo" src="Real-Aviles-Industrial_2000x2000-scaled.png" alt="UNI">',
+  'Ourense CF':'<img class="team-logo" src="Official_shield_of_Ourense_CF.png" alt="UNI">',
+  'CD Guadalajara': '<img class="team-logo" src="cd-guadalajara.png" alt="GUA">',
+  'CF Talavera de la Reina': '<img class="team-logo" src="CF_Talavera_de_la_Reina.png" alt="TAL">',
+  'CP Cacereño': '<img class="team-logo" src="cp-cacereño.png" alt="CAC">',
+  'CD Arenteiro': '<img class="team-logo" src="logo_arenteiro.png" alt="ARE">',
+  'Club Atlético Osasuna B': '<img class="team-logo" src="ca_osasuna.png" alt="OSA">',
+};
+const REAL_STANDINGS=[{team:"CD Tenerife",pj:29,g:19,e:6,p:4,gf:50,gc:17},{team:"RC Celta Fortuna",pj:29,g:14,e:9,p:6,gf:44,gc:36},{team:"Athletic Club B",pj:29,g:12,e:8,p:9,gf:31,gc:31},{team:"Barakaldo CF",pj:29,g:11,e:11,p:7,gf:38,gc:29},{team:"Pontevedra CF",pj:28,g:10,e:13,p:5,gf:33,gc:21},{team:"SD Ponferradina",pj:29,g:12,e:7,p:10,gf:31,gc:24},{team:"Zamora CF",pj:29,g:11,e:10,p:8,gf:38,gc:33},{team:"Real Madrid Castilla",pj:29,g:12,e:7,p:10,gf:40,gc:38},{team:"CD Lugo",pj:29,g:10,e:12,p:7,gf:28,gc:28},{team:"Racing Club Ferrol",pj:29,g:10,e:5,p:14,gf:32,gc:39},{team:"Unionistas de Salamanca CF",pj:29,g:10,e:6,p:13,gf:34,gc:41},{team:"Arenas Club",pj:29,g:9,e:9,p:11,gf:30,gc:34},{team:"AD Mérida",pj:29,g:9,e:8,p:12,gf:30,gc:37},{team:"Real Avilés Industrial",pj:29,g:9,e:7,p:13,gf:41,gc:49},{team:"Ourense CF",pj:29,g:8,e:9,p:12,gf:32,gc:34},{team:"CD Guadalajara",pj:29,g:8,e:8,p:13,gf:31,gc:42},{team:"CF Talavera de la Reina",pj:29,g:8,e:7,p:14,gf:30,gc:39},{team:"CP Cacereño",pj:29,g:6,e:12,p:11,gf:27,gc:38},{team:"CD Arenteiro",pj:29,g:6,e:8,p:15,gf:26,gc:37},{team:"Club Atlético Osasuna B",pj:29,g:5,e:9,p:15,gf:18,gc:34}];
+const CALENDARIO={1:{fecha:"31/08/2025",partidos:[["Racing Club Ferrol","CF Talavera de la Reina"],["Arenas Club","CD Arenteiro"],["Real Avilés Industrial","SD Ponferradina"],["CD Guadalajara","CD Tenerife"],["Real Madrid Castilla","CD Lugo"],["Zamora CF","RC Celta Fortuna"],["Ourense CF","Athletic Club B"],["AD Mérida","Barakaldo CF"],["Unionistas de Salamanca CF","Club Atlético Osasuna B"],["Pontevedra CF","CP Cacereño"]]},2:{fecha:"07/09/2025",partidos:[["CD Arenteiro","Unionistas de Salamanca CF"],["RC Celta Fortuna","CD Guadalajara"],["SD Ponferradina","Pontevedra CF"],["Barakaldo CF","Zamora CF"],["Arenas Club","CP Cacereño"],["Club Atlético Osasuna B","Ourense CF"],["Real Madrid Castilla","Racing Club Ferrol"],["CF Talavera de la Reina","Athletic Club B"],["CD Lugo","Real Avilés Industrial"],["CD Tenerife","AD Mérida"]]},3:{fecha:"14/09/2025",partidos:[["Ourense CF","CF Talavera de la Reina"],["Racing Club Ferrol","SD Ponferradina"],["Pontevedra CF","CD Tenerife"],["Athletic Club B","Real Madrid Castilla"],["Real Avilés Industrial","Club Atlético Osasuna B"],["CD Guadalajara","Unionistas de Salamanca CF"],["CP Cacereño","CD Arenteiro"],["AD Mérida","RC Celta Fortuna"],["Zamora CF","CD Lugo"],["Barakaldo CF","Arenas Club"]]},4:{fecha:"21/09/2025",partidos:[["CD Arenteiro","Zamora CF"],["Athletic Club B","Pontevedra CF"],["CP Cacereño","AD Mérida"],["CD Tenerife","Ourense CF"],["CD Lugo","Racing Club Ferrol"],["CF Talavera de la Reina","Barakaldo CF"],["RC Celta Fortuna","Arenas Club"],["Unionistas de Salamanca CF","Real Avilés Industrial"],["SD Ponferradina","CD Guadalajara"],["Club Atlético Osasuna B","Real Madrid Castilla"]]},5:{fecha:"28/09/2025",partidos:[["Ourense CF","Pontevedra CF"],["Racing Club Ferrol","CD Guadalajara"],["Barakaldo CF","CP Cacereño"],["Arenas Club","Unionistas de Salamanca CF"],["Club Atlético Osasuna B","SD Ponferradina"],["Real Madrid Castilla","CD Tenerife"],["RC Celta Fortuna","CD Arenteiro"],["CF Talavera de la Reina","CD Lugo"],["Real Avilés Industrial","Athletic Club B"],["Zamora CF","AD Mérida"]]},6:{fecha:"05/10/2025",partidos:[["CD Arenteiro","Barakaldo CF"],["Racing Club Ferrol","Ourense CF"],["Pontevedra CF","CF Talavera de la Reina"],["Athletic Club B","Club Atlético Osasuna B"],["CD Tenerife","Zamora CF"],["Unionistas de Salamanca CF","RC Celta Fortuna"],["AD Mérida","Arenas Club"],["CD Guadalajara","Real Avilés Industrial"],["CD Lugo","CP Cacereño"],["SD Ponferradina","Real Madrid Castilla"]]},7:{fecha:"12/10/2025",partidos:[["CD Arenteiro","CD Guadalajara"],["RC Celta Fortuna","Ourense CF"],["Arenas Club","CD Lugo"],["CP Cacereño","CD Tenerife"],["Real Madrid Castilla","Pontevedra CF"],["Club Atlético Osasuna B","Racing Club Ferrol"],["CF Talavera de la Reina","SD Ponferradina"],["Barakaldo CF","Athletic Club B"],["Zamora CF","Real Avilés Industrial"],["Unionistas de Salamanca CF","AD Mérida"]]},8:{fecha:"19/10/2025",partidos:[["SD Ponferradina","Zamora CF"],["Athletic Club B","CP Cacereño"],["Real Avilés Industrial","CF Talavera de la Reina"],["AD Mérida","CD Arenteiro"],["CD Lugo","RC Celta Fortuna"],["CD Guadalajara","Barakaldo CF"],["Racing Club Ferrol","Arenas Club"],["Pontevedra CF","Club Atlético Osasuna B"],["CD Tenerife","Unionistas de Salamanca CF"],["Ourense CF","Real Madrid Castilla"]]},9:{fecha:"26/10/2025",partidos:[["CD Arenteiro","Pontevedra CF"],["RC Celta Fortuna","Racing Club Ferrol"],["Barakaldo CF","CD Tenerife"],["Arenas Club","CD Guadalajara"],["AD Mérida","SD Ponferradina"],["CP Cacereño","Ourense CF"],["Unionistas de Salamanca CF","CD Lugo"],["Zamora CF","Athletic Club B"],["CF Talavera de la Reina","Club Atlético Osasuna B"],["Real Madrid Castilla","Real Avilés Industrial"]]},10:{fecha:"02/11/2025",partidos:[["Racing Club Ferrol","CD Tenerife"],["Pontevedra CF","Zamora CF"],["Athletic Club B","Unionistas de Salamanca CF"],["CD Guadalajara","AD Mérida"],["Real Madrid Castilla","CF Talavera de la Reina"],["Real Avilés Industrial","CD Arenteiro"],["Club Atlético Osasuna B","RC Celta Fortuna"],["CD Lugo","Barakaldo CF"],["Ourense CF","Arenas Club"],["SD Ponferradina","CP Cacereño"]]},11:{fecha:"09/11/2025",partidos:[["CD Arenteiro","Racing Club Ferrol"],["RC Celta Fortuna","CF Talavera de la Reina"],["Barakaldo CF","SD Ponferradina"],["Arenas Club","Club Atlético Osasuna B"],["CD Guadalajara","CD Lugo"],["Zamora CF","Ourense CF"],["Unionistas de Salamanca CF","Pontevedra CF"],["CD Tenerife","Athletic Club B"],["CP Cacereño","Real Avilés Industrial"],["AD Mérida","Real Madrid Castilla"]]},12:{fecha:"16/11/2025",partidos:[["Racing Club Ferrol","Zamora CF"],["Athletic Club B","CD Arenteiro"],["CD Tenerife","RC Celta Fortuna"],["SD Ponferradina","CD Lugo"],["Club Atlético Osasuna B","Barakaldo CF"],["Real Avilés Industrial","Arenas Club"],["CF Talavera de la Reina","Unionistas de Salamanca CF"],["Pontevedra CF","AD Mérida"],["Real Madrid Castilla","CP Cacereño"],["Ourense CF","CD Guadalajara"]]},13:{fecha:"23/11/2025",partidos:[["CD Arenteiro","Ourense CF"],["RC Celta Fortuna","SD Ponferradina"],["CD Lugo","Pontevedra CF"],["Barakaldo CF","Racing Club Ferrol"],["Arenas Club","CD Tenerife"],["CP Cacereño","Club Atlético Osasuna B"],["CD Guadalajara","Athletic Club B"],["AD Mérida","Real Avilés Industrial"],["Zamora CF","CF Talavera de la Reina"],["Unionistas de Salamanca CF","Real Madrid Castilla"]]},14:{fecha:"30/11/2025",partidos:[["Ourense CF","Unionistas de Salamanca CF"],["Racing Club Ferrol","AD Mérida"],["Athletic Club B","CD Lugo"],["Club Atlético Osasuna B","Zamora CF"],["Real Avilés Industrial","RC Celta Fortuna"],["CD Tenerife","CD Arenteiro"],["Real Madrid Castilla","Barakaldo CF"],["SD Ponferradina","Arenas Club"],["CF Talavera de la Reina","CP Cacereño"],["Pontevedra CF","CD Guadalajara"]]},15:{fecha:"07/12/2025",partidos:[["CD Arenteiro","CF Talavera de la Reina"],["RC Celta Fortuna","Pontevedra CF"],["CD Lugo","CD Tenerife"],["Arenas Club","Athletic Club B"],["AD Mérida","Ourense CF"],["CP Cacereño","Racing Club Ferrol"],["CD Guadalajara","Club Atlético Osasuna B"],["Unionistas de Salamanca CF","SD Ponferradina"],["Barakaldo CF","Real Avilés Industrial"],["Zamora CF","Real Madrid Castilla"]]},16:{fecha:"14/12/2025",partidos:[["Racing Club Ferrol","Unionistas de Salamanca CF"],["Athletic Club B","RC Celta Fortuna"],["Real Avilés Industrial","CD Tenerife"],["CP Cacereño","Zamora CF"],["Real Madrid Castilla","CD Guadalajara"],["SD Ponferradina","CD Arenteiro"],["Club Atlético Osasuna B","CD Lugo"],["Ourense CF","Barakaldo CF"],["Pontevedra CF","Arenas Club"],["CF Talavera de la Reina","AD Mérida"]]},17:{fecha:"21/12/2025",partidos:[["CD Arenteiro","Club Atlético Osasuna B"],["CD Lugo","Ourense CF"],["Barakaldo CF","Pontevedra CF"],["Arenas Club","CF Talavera de la Reina"],["Real Avilés Industrial","Racing Club Ferrol"],["CD Guadalajara","Zamora CF"],["CD Tenerife","SD Ponferradina"],["AD Mérida","Athletic Club B"],["Unionistas de Salamanca CF","CP Cacereño"],["RC Celta Fortuna","Real Madrid Castilla"]]},18:{fecha:"04/01/2026",partidos:[["CD Lugo","AD Mérida"],["Athletic Club B","SD Ponferradina"],["Barakaldo CF","Unionistas de Salamanca CF"],["Club Atlético Osasuna B","CD Tenerife"],["CP Cacereño","RC Celta Fortuna"],["Real Madrid Castilla","CD Arenteiro"],["Pontevedra CF","Racing Club Ferrol"],["Zamora CF","Arenas Club"],["Ourense CF","Real Avilés Industrial"],["CF Talavera de la Reina","CD Guadalajara"]]},19:{fecha:"11/01/2026",partidos:[["CD Arenteiro","CD Lugo"],["Arenas Club","Real Madrid Castilla"],["Unionistas de Salamanca CF","Zamora CF"],["Real Avilés Industrial","Pontevedra CF"],["AD Mérida","Club Atlético Osasuna B"],["SD Ponferradina","Ourense CF"],["Racing Club Ferrol","Athletic Club B"],["RC Celta Fortuna","Barakaldo CF"],["CD Guadalajara","CP Cacereño"],["CD Tenerife","CF Talavera de la Reina"]]},20:{fecha:"18/01/2026",partidos:[["CD Lugo","Unionistas de Salamanca CF"],["Athletic Club B","Real Avilés Industrial"],["Barakaldo CF","CD Guadalajara"],["Real Madrid Castilla","AD Mérida"],["Pontevedra CF","CD Arenteiro"],["CF Talavera de la Reina","RC Celta Fortuna"],["SD Ponferradina","Racing Club Ferrol"],["CP Cacereño","Arenas Club"],["Ourense CF","Club Atlético Osasuna B"],["Zamora CF","CD Tenerife"]]},21:{fecha:"25/01/2026",partidos:[["RC Celta Fortuna","Zamora CF"],["Athletic Club B","Barakaldo CF"],["Unionistas de Salamanca CF","CF Talavera de la Reina"],["Real Avilés Industrial","CD Lugo"],["AD Mérida","Pontevedra CF"],["CD Guadalajara","SD Ponferradina"],["Racing Club Ferrol","CD Arenteiro"],["Club Atlético Osasuna B","Arenas Club"],["Ourense CF","CP Cacereño"],["CD Tenerife","Real Madrid Castilla"]]},22:{fecha:"01/02/2026",partidos:[["CD Arenteiro","Athletic Club B"],["RC Celta Fortuna","Unionistas de Salamanca CF"],["CD Lugo","SD Ponferradina"],["Arenas Club","Ourense CF"],["Real Avilés Industrial","AD Mérida"],["Real Madrid Castilla","Club Atlético Osasuna B"],["Zamora CF","Racing Club Ferrol"],["CF Talavera de la Reina","Pontevedra CF"],["CP Cacereño","Barakaldo CF"],["CD Tenerife","CD Guadalajara"]]},23:{fecha:"08/02/2026",partidos:[["CD Arenteiro","Real Avilés Industrial"],["Racing Club Ferrol","CD Lugo"],["Athletic Club B","CD Tenerife"],["Barakaldo CF","CF Talavera de la Reina"],["AD Mérida","Zamora CF"],["Unionistas de Salamanca CF","Ourense CF"],["SD Ponferradina","RC Celta Fortuna"],["CD Guadalajara","Arenas Club"],["Club Atlético Osasuna B","CP Cacereño"],["Pontevedra CF","Real Madrid Castilla"]]},24:{fecha:"15/02/2026",partidos:[["Arenas Club","SD Ponferradina"],["Club Atlético Osasuna B","Unionistas de Salamanca CF"],["CP Cacereño","Pontevedra CF"],["CF Talavera de la Reina","CD Arenteiro"],["CD Tenerife","Racing Club Ferrol"],["Real Madrid Castilla","Athletic Club B"],["Zamora CF","Barakaldo CF"],["RC Celta Fortuna","Real Avilés Industrial"],["Ourense CF","AD Mérida"],["CD Lugo","CD Guadalajara"]]},25:{fecha:"22/02/2026",partidos:[["CD Arenteiro","CD Tenerife"],["SD Ponferradina","CF Talavera de la Reina"],["Athletic Club B","Zamora CF"],["Barakaldo CF","Club Atlético Osasuna B"],["Real Avilés Industrial","Real Madrid Castilla"],["CD Guadalajara","Ourense CF"],["Racing Club Ferrol","RC Celta Fortuna"],["Pontevedra CF","CD Lugo"],["Unionistas de Salamanca CF","Arenas Club"],["AD Mérida","CP Cacereño"]]},26:{fecha:"01/03/2026",partidos:[["RC Celta Fortuna","AD Mérida"],["Arenas Club","Barakaldo CF"],["Club Atlético Osasuna B","Pontevedra CF"],["CP Cacereño","Unionistas de Salamanca CF"],["Real Madrid Castilla","SD Ponferradina"],["Ourense CF","CD Arenteiro"],["CF Talavera de la Reina","Racing Club Ferrol"],["CD Lugo","Athletic Club B"],["CD Tenerife","Real Avilés Industrial"],["Zamora CF","CD Guadalajara"]]},27:{fecha:"08/03/2026",partidos:[["CD Arenteiro","Real Madrid Castilla"],["Pontevedra CF","Unionistas de Salamanca CF"],["Barakaldo CF","Ourense CF"],["Real Avilés Industrial","Zamora CF"],["AD Mérida","CF Talavera de la Reina"],["CD Guadalajara","RC Celta Fortuna"],["CD Tenerife","CD Lugo"],["Athletic Club B","Arenas Club"],["SD Ponferradina","Club Atlético Osasuna B"],["Racing Club Ferrol","CP Cacereño"]]},28:{fecha:"15/03/2026",partidos:[["RC Celta Fortuna","CD Tenerife"],["Arenas Club","Pontevedra CF"],["CP Cacereño","SD Ponferradina"],["Zamora CF","CD Arenteiro"],["Ourense CF","Racing Club Ferrol"],["Club Atlético Osasuna B","Athletic Club B"],["Unionistas de Salamanca CF","Barakaldo CF"],["CF Talavera de la Reina","Real Avilés Industrial"],["AD Mérida","CD Guadalajara"],["CD Lugo","Real Madrid Castilla"]]},29:{fecha:"22/03/2026",partidos:[["CD Arenteiro","RC Celta Fortuna"],["SD Ponferradina","Unionistas de Salamanca CF"],["Athletic Club B","AD Mérida"],["Real Avilés Industrial","CP Cacereño"],["CD Guadalajara","CF Talavera de la Reina"],["Real Madrid Castilla","Zamora CF"],["Pontevedra CF","Ourense CF"],["Racing Club Ferrol","Barakaldo CF"],["CD Lugo","Arenas Club"],["CD Tenerife","Club Atlético Osasuna B"]]},30:{fecha:"29/03/2026",partidos:[["Ourense CF","SD Ponferradina"],["Barakaldo CF","Real Madrid Castilla"],["Arenas Club","Real Avilés Industrial"],["CP Cacereño","CD Lugo"],["CF Talavera de la Reina","CD Tenerife"],["Unionistas de Salamanca CF","CD Arenteiro"],["AD Mérida","Racing Club Ferrol"],["Zamora CF","Pontevedra CF"],["RC Celta Fortuna","Athletic Club B"],["Club Atlético Osasuna B","CD Guadalajara"]]},31:{fecha:"05/04/2026",partidos:[["CD Lugo","Club Atlético Osasuna B"],["Athletic Club B","CF Talavera de la Reina"],["Real Avilés Industrial","Ourense CF"],["Real Madrid Castilla","RC Celta Fortuna"],["CD Guadalajara","Racing Club Ferrol"],["Pontevedra CF","Barakaldo CF"],["CD Arenteiro","Arenas Club"],["Zamora CF","Unionistas de Salamanca CF"],["SD Ponferradina","AD Mérida"],["CD Tenerife","CP Cacereño"]]},32:{fecha:"12/04/2026",partidos:[["Arenas Club","RC Celta Fortuna"],["AD Mérida","CD Tenerife"],["CF Talavera de la Reina","Zamora CF"],["Barakaldo CF","CD Arenteiro"],["Ourense CF","CD Lugo"],["Pontevedra CF","SD Ponferradina"],["CP Cacereño","Athletic Club B"],["Club Atlético Osasuna B","Real Avilés Industrial"],["Unionistas de Salamanca CF","CD Guadalajara"],["Racing Club Ferrol","Real Madrid Castilla"]]},33:{fecha:"19/04/2026",partidos:[["CD Arenteiro","AD Mérida"],["CD Lugo","CF Talavera de la Reina"],["Athletic Club B","Racing Club Ferrol"],["Real Avilés Industrial","Unionistas de Salamanca CF"],["CD Guadalajara","Pontevedra CF"],["Real Madrid Castilla","Ourense CF"],["SD Ponferradina","Barakaldo CF"],["CD Tenerife","Arenas Club"],["Zamora CF","Club Atlético Osasuna B"],["RC Celta Fortuna","CP Cacereño"]]},34:{fecha:"26/04/2026",partidos:[["Ourense CF","Zamora CF"],["SD Ponferradina","CD Tenerife"],["Barakaldo CF","CD Lugo"],["Arenas Club","AD Mérida"],["CP Cacereño","CD Guadalajara"],["Club Atlético Osasuna B","CD Arenteiro"],["Pontevedra CF","RC Celta Fortuna"],["Unionistas de Salamanca CF","Athletic Club B"],["Racing Club Ferrol","Real Avilés Industrial"],["CF Talavera de la Reina","Real Madrid Castilla"]]},35:{fecha:"03/05/2026",partidos:[["CD Arenteiro","CP Cacereño"],["RC Celta Fortuna","Club Atlético Osasuna B"],["Racing Club Ferrol","Pontevedra CF"],["Athletic Club B","Ourense CF"],["Real Avilés Industrial","CD Guadalajara"],["Real Madrid Castilla","Unionistas de Salamanca CF"],["AD Mérida","CD Lugo"],["Zamora CF","SD Ponferradina"],["CD Tenerife","Barakaldo CF"],["CF Talavera de la Reina","Arenas Club"]]},36:{fecha:"10/05/2026",partidos:[["CD Lugo","Zamora CF"],["Barakaldo CF","AD Mérida"],["Arenas Club","Racing Club Ferrol"],["Club Atlético Osasuna B","CF Talavera de la Reina"],["Unionistas de Salamanca CF","CD Tenerife"],["CP Cacereño","Real Madrid Castilla"],["CD Guadalajara","CD Arenteiro"],["Ourense CF","RC Celta Fortuna"],["Pontevedra CF","Athletic Club B"],["SD Ponferradina","Real Avilés Industrial"]]},37:{fecha:"17/05/2026",partidos:[["CD Arenteiro","SD Ponferradina"],["RC Celta Fortuna","CD Lugo"],["Racing Club Ferrol","Club Atlético Osasuna B"],["Athletic Club B","CD Guadalajara"],["Real Avilés Industrial","Barakaldo CF"],["AD Mérida","Unionistas de Salamanca CF"],["CF Talavera de la Reina","Ourense CF"],["CD Tenerife","Pontevedra CF"],["Real Madrid Castilla","Arenas Club"],["Zamora CF","CP Cacereño"]]},38:{fecha:"24/05/2026",partidos:[["Ourense CF","CD Tenerife"],["Barakaldo CF","RC Celta Fortuna"],["Arenas Club","Zamora CF"],["CP Cacereño","CF Talavera de la Reina"],["CD Lugo","CD Arenteiro"],["Unionistas de Salamanca CF","Racing Club Ferrol"],["SD Ponferradina","Athletic Club B"],["Pontevedra CF","Real Avilés Industrial"],["Club Atlético Osasuna B","AD Mérida"],["CD Guadalajara","Real Madrid Castilla"]]}};
+const simResults={};let currentSimJornada=30;
+const pts=s=>s.g*3+s.e,dg=s=>s.gf-s.gc;
+function sort(arr){return[...arr].sort((a,b)=>{if(pts(b)!==pts(a))return pts(b)-pts(a);if(dg(b)!==dg(a))return dg(b)-dg(a);if(b.gf!==a.gf)return b.gf-a.gf;return a.team.localeCompare(b.team)})}
+function zone(p){if(p===1)return'z-asc';if(p<=5)return'z-promo';if(p>=16)return'z-desc';return''}
+function badge(p){if(p===1)return'<span class="badge badge-asc">↑ Ascenso</span>';if(p<=5)return'<span class="badge badge-promo">Playoff</span>';if(p>=16)return'<span class="badge badge-desc">↓ Descenso</span>';return''}
+function dgHtml(v){const s=v>=0?'+'+v:''+v;return'<span class="'+(v>0?'dg-pos':v<0?'dg-neg':'')+'">'+s+'</span>'}
+function renderClasi(standings,bodyId){const s=sort(standings);document.getElementById(bodyId).innerHTML=s.map((t,i)=>{const p=i+1;const logo=LOGOS[t.team]||'';return'<tr class="'+zone(p)+'"><td><span class="pos-num">'+p+'</span></td><td><div class="team-cell">'+logo+'<span class="team-name">'+t.team+'</span></div></td><td>'+t.pj+'</td><td>'+t.g+'</td><td>'+t.e+'</td><td>'+t.p+'</td><td>'+t.gf+'</td><td>'+t.gc+'</td><td>'+dgHtml(dg(t))+'</td><td><span class="pts-cell">'+pts(t)+'</span></td></tr>'}).join('')}
+function buildCalSelect(){const sel=document.getElementById('cal-select');for(let j=1;j<=38;j++){const o=document.createElement('option');o.value=j;o.textContent='Jornada '+j+' · '+CALENDARIO[j].fecha;if(j===29)o.selected=true;sel.appendChild(o)}}
+function renderCalendario(){const j=parseInt(document.getElementById('cal-select').value),jd=CALENDARIO[j],sim=simResults[j];document.getElementById('cal-date').textContent='📅  '+jd.fecha;document.getElementById('cal-matches').innerHTML=jd.partidos.map((p,idx)=>{let sc;if(j<=29)sc='<div class="m-score pending">— : —</div>';else if(sim)sc='<div class="m-score simulated">'+sim[idx].gh+' : '+sim[idx].ga+'</div>';else sc='<div class="m-score pending">— : —</div>';return'<div class="match-row"><div class="m-home">'+p[0]+'</div>'+sc+'<div class="m-away">'+p[1]+'</div></div>'}).join('')}
+function buildSimBtns(){document.getElementById('sim-jornada-btns').innerHTML='';for(let j=30;j<=38;j++){const b=document.createElement('button');b.className='sim-j-btn'+(j===currentSimJornada?' active':'')+(simResults[j]?' done':'');b.textContent='J'+j;b.title=CALENDARIO[j].fecha;b.onclick=(()=>{const jj=j;return()=>{currentSimJornada=jj;buildSimBtns();renderSimMatches()}})();document.getElementById('sim-jornada-btns').appendChild(b)}}
+function renderSimMatches(){const j=currentSimJornada,jd=CALENDARIO[j],saved=simResults[j];document.getElementById('sim-current-card').style.display='block';document.getElementById('sim-card-title').textContent='Jornada '+j+' · '+jd.fecha;document.getElementById('sim-current-matches').innerHTML=jd.partidos.map((p,i)=>{const gh=saved?saved[i].gh:'',ga=saved?saved[i].ga:'';return'<div class="sim-match-row"><div class="s-home">'+p[0]+'</div><div class="s-score-inputs"><input type="number" id="gh_'+i+'" value="'+gh+'" min="0" max="20" placeholder="0"><span class="s-dash">—</span><input type="number" id="ga_'+i+'" value="'+ga+'" min="0" max="20" placeholder="0"></div><div class="s-away">'+p[1]+'</div></div>'}).join('')}
+function autoFill(){const n=CALENDARIO[currentSimJornada].partidos.length;for(let i=0;i<n;i++){document.getElementById('gh_'+i).value=Math.floor(Math.random()*4);document.getElementById('ga_'+i).value=Math.floor(Math.random()*4)}}
+function applySimJornada(){const j=currentSimJornada,n=CALENDARIO[j].partidos.length,res=[];for(let i=0;i<n;i++){const gh=parseInt(document.getElementById('gh_'+i).value),ga=parseInt(document.getElementById('ga_'+i).value);if(isNaN(gh)||isNaN(ga)){alert('Rellena todos los resultados.');return}res.push({gh,ga})}simResults[j]=res;buildSimBtns();updateSimClasi();if(j<38){currentSimJornada=j+1;buildSimBtns();renderSimMatches()}}
+function updateSimClasi(){const standings=REAL_STANDINGS.map(s=>({...s})),map={};standings.forEach(s=>map[s.team]=s);for(let j=30;j<=38;j++){if(!simResults[j])continue;CALENDARIO[j].partidos.forEach((p,i)=>{const r=simResults[j][i],h=map[p[0]],a=map[p[1]];if(!h||!a)return;h.pj++;a.pj++;h.gf+=r.gh;h.gc+=r.ga;a.gf+=r.ga;a.gc+=r.gh;if(r.gh>r.ga){h.g++;a.p++}else if(r.gh<r.ga){a.g++;h.p++}else{h.e++;a.e++}})}const rp={};sort(REAL_STANDINGS).forEach((s,i)=>rp[s.team]=i+1);const ss=sort(standings);document.getElementById('sim-clasi-section').style.display='block';document.getElementById('sim-clasi-body').innerHTML=ss.map((s,i)=>{const p=i+1,op=rp[s.team],d=op-p,df=d>0?'<span class="diff-up">▲'+d+'</span>':d<0?'<span class="diff-dn">▼'+Math.abs(d)+'</span>':'<span class="diff-eq">—</span>';return'<tr class="'+zone(p)+'"><td><span class="pos-num">'+p+'</span></td><td><div class="team-cell">'+(LOGOS[s.team]||'')+'<span>'+s.team+badge(p)+'</span></div></td><td>'+s.pj+'</td><td><span class="pts-cell">'+pts(s)+'</span></td><td>'+dgHtml(dg(s))+'</td><td>'+df+'</td></tr>'}).join('')}
+function resetJornada(){const j=currentSimJornada;if(!simResults[j]&&!document.getElementById('gh_0').value){return}if(!confirm('¿Limpiar los resultados de la jornada '+j+'?'))return;delete simResults[j];buildSimBtns();renderSimMatches();updateSimClasi()}
+function resetSim(){if(!confirm('¿Reiniciar todos los resultados simulados?'))return;Object.keys(simResults).forEach(k=>delete simResults[k]);document.getElementById('sim-clasi-section').style.display='none';currentSimJornada=30;buildSimBtns();renderSimMatches()}
+function showTab(name){const names=['clasificacion','calendario','simulador'];document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',names[i]===name));document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById('panel-'+name).classList.add('active');if(name==='calendario')renderCalendario()}
+
+// ═══════════════════════════════════════════════════════
+// MODAL + ACTUALIZACIÓN IA
+// ═══════════════════════════════════════════════════════
+function openModal(){
+  document.getElementById('modal').style.display='flex';
+  document.getElementById('update-input').value='';
+  document.getElementById('modal-result').className='modal-result';
+  document.getElementById('modal-result').textContent='';
+  document.getElementById('modal-spinner').classList.remove('visible');
+}
+function closeModal(){ document.getElementById('modal').style.display='none' }
+function closeModalOutside(e){ if(e.target.id==='modal') closeModal() }
+
+async function runAIUpdate(){
+  const input = document.getElementById('update-input').value.trim();
+  if(!input){ alert('Pega primero los resultados o la clasificación.'); return; }
+
+  document.getElementById('modal-spinner').classList.add('visible');
+  document.getElementById('modal-result').className='modal-result';
+  document.getElementById('modal-result').textContent='';
+
+  const teamList = REAL_STANDINGS.map(s=>s.team).join(', ');
+
+  const prompt = `Eres un asistente de fútbol español. El usuario te pasa datos de la Primera RFEF Grupo 1 temporada 2025/26.
+
+Los equipos del grupo son: ${teamList}
+
+El usuario pega el siguiente texto (puede ser una clasificación, resultados de jornada, o ambas cosas):
+---
+${input}
+---
+
+Analiza el texto y responde SOLO con un objeto JSON válido, sin texto adicional, sin markdown, sin backticks.
+
+Si el texto contiene una CLASIFICACIÓN completa, devuelve:
+{
+  "type": "standings",
+  "jornada": <número de jornada si aparece, si no pon null>,
+  "standings": [
+    {"team": "<nombre exacto del equipo de la lista>", "pj": 0, "g": 0, "e": 0, "p": 0, "gf": 0, "gc": 0},
+    ...
+  ]
+}
+
+Si el texto contiene RESULTADOS de partidos, devuelve:
+{
+  "type": "results",
+  "jornada": <número de jornada si aparece, si no pon null>,
+  "results": [
+    {"home": "<nombre exacto>", "away": "<nombre exacto>", "gh": 0, "ga": 0},
+    ...
+  ]
+}
+
+Usa los nombres exactos de la lista de equipos. Si un nombre del texto no coincide exactamente, búscale el equivalente más cercano de la lista.`;
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    const data = await resp.json();
+    const raw = data.content?.find(b => b.type === 'text')?.text || '';
+    let parsed;
+    try {
+      const clean = raw.replace(/```json|```/g,'').trim();
+      parsed = JSON.parse(clean);
+    } catch(e) {
+      throw new Error('No se pudo interpretar la respuesta de la IA. Intenta pegar el texto de otro modo.');
+    }
+
+    applyAIData(parsed);
+
+  } catch(err) {
+    document.getElementById('modal-result').className='modal-result err';
+    document.getElementById('modal-result').textContent='❌ ' + err.message;
+  } finally {
+    document.getElementById('modal-spinner').classList.remove('visible');
+  }
+}
+
+function applyAIData(data) {
+  const resultEl = document.getElementById('modal-result');
+
+  if(data.type === 'standings' && data.standings?.length) {
+    // Actualizar REAL_STANDINGS con los datos recibidos
+    const map = {};
+    data.standings.forEach(s => map[s.team] = s);
+    REAL_STANDINGS.forEach((s,i) => {
+      if(map[s.team]) {
+        REAL_STANDINGS[i] = { ...REAL_STANDINGS[i], ...map[s.team] };
+      }
+    });
+    // Actualizar badge de jornada en header
+    if(data.jornada) {
+      document.querySelectorAll('.header-badge').forEach(el => {
+        el.textContent = 'J' + data.jornada + ' / 38';
+      });
+    }
+    renderClasi(REAL_STANDINGS, 'clasi-body');
+    if(Object.keys(simResults).length > 0) updateSimClasi();
+    resultEl.className='modal-result ok';
+    resultEl.textContent='✓ Clasificación actualizada con ' + data.standings.length + ' equipos.' + (data.jornada ? ' Jornada ' + data.jornada + '.' : '');
+
+  } else if(data.type === 'results' && data.results?.length) {
+    // Aplicar resultados al simulador si la jornada es pendiente (>29)
+    if(data.jornada && data.jornada > 29) {
+      const jornada = data.jornada;
+      const jornadaPartidos = CALENDARIO[jornada]?.partidos || [];
+      const res = jornadaPartidos.map(p => {
+        const match = data.results.find(r =>
+          (r.home === p[0] && r.away === p[1]) ||
+          (r.home === p[1] && r.away === p[0])
+        );
+        if(match) {
+          return match.home === p[0]
+            ? { gh: match.gh, ga: match.ga }
+            : { gh: match.ga, ga: match.gh };
+        }
+        return null;
+      });
+      if(res.every(r => r !== null)) {
+        simResults[jornada] = res;
+        currentSimJornada = jornada;
+        buildSimBtns();
+        renderSimMatches();
+        updateSimClasi();
+        showTab('simulador');
+        resultEl.className='modal-result ok';
+        resultEl.textContent='✓ ' + data.results.length + ' resultados aplicados a la jornada ' + jornada + '.';
+      } else {
+        // Aplicar los que coincidan
+        const partial = res.map((r,i) => r || { gh: 0, ga: 0 });
+        simResults[jornada] = partial;
+        currentSimJornada = jornada;
+        buildSimBtns(); renderSimMatches(); updateSimClasi();
+        showTab('simulador');
+        resultEl.className='modal-result ok';
+        resultEl.textContent='✓ ' + data.results.length + ' resultados aplicados a la jornada ' + jornada + ' (algunos partidos no encontrados se dejaron en 0-0).';
+      }
+    } else {
+      // Resultados de jornadas ya jugadas: actualizar clasificación recalculando
+      resultEl.className='modal-result ok';
+      resultEl.textContent='✓ ' + data.results.length + ' resultados recibidos. Para jornadas ya disputadas, pega directamente la tabla de clasificación para mayor precisión.';
+    }
+  } else {
+    resultEl.className='modal-result err';
+    resultEl.textContent='❌ No se encontraron datos válidos en el texto. Intenta con otro formato.';
+  }
+}
+
+renderClasi(REAL_STANDINGS,'clasi-body');buildCalSelect();buildSimBtns();renderSimMatches();
+</script>
+
+<!-- ── MODAL ACTUALIZAR DATOS ── -->
+<div class="modal-overlay" id="modal" style="display:none" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>⟳ Actualizar clasificación con IA</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-label">Pega aquí los resultados o la clasificación</div>
+      <textarea class="modal-textarea" id="update-input" placeholder="Ejemplo:
+CD Tenerife 2-1 Celta Fortuna
+Barakaldo 0-0 Pontevedra
+...
+
+O pega la tabla de clasificación de cualquier web."></textarea>
+      <div class="modal-hint">💡 Puedes pegar texto de cualquier fuente: resultados de BeSoccer, marca.com, la RFEF… Claude interpretará el formato automáticamente y actualizará la clasificación del Grupo 1.</div>
+      <div class="modal-spinner" id="modal-spinner">
+        <div class="spinner-dot"></div><div class="spinner-dot"></div><div class="spinner-dot"></div>
+        <span>Procesando con IA…</span>
+      </div>
+      <div class="modal-result" id="modal-result"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
+      <button class="btn-primary" onclick="runAIUpdate()">✓ Procesar</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
